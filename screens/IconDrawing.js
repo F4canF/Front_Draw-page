@@ -18,16 +18,16 @@ const Stack = createStackNavigator();
 
 // 이미지 목록 (RandImage 폴더에서 이미지를 가져옴)
 const images = [
-  require('./RandImage/image1.png'),
-  require('./RandImage/image2.png'),
-  require('./RandImage/image3.png'),
-  require('./RandImage/image4.png'),
-  require('./RandImage/image5.png'),
-  require('./RandImage/image6.png'),
-  require('./RandImage/image7.png'),
-  require('./RandImage/image8.png'),
-  require('./RandImage/image9.png'),
-  require('./RandImage/image10.png'),
+  require('./RandImage/icon1.svg'),
+  require('./RandImage/icon2.svg'),
+  require('./RandImage/icon3.svg'),
+  require('./RandImage/icon4.svg'),
+  require('./RandImage/icon5.svg'),
+  require('./RandImage/icon6.svg'),
+  require('./RandImage/icon7.svg'),
+  require('./RandImage/icon8.svg'),
+  require('./RandImage/icon9.svg'),
+  require('./RandImage/icon10.svg'),
 ];
 
 const App = () => {

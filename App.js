@@ -19,74 +19,82 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      {/* 왼쪽 중앙의 버튼들 */}
-      <View style={styles.buttonContainer}> 
-        <TouchableOpacity style={styles.button} onPresds={() => NavigationContainer.navigae('IconDraw')}> {/* 아이콘 그리기*/}
-          <Text style={styles.buttonText}>아이콘 그리기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPresds={() => NavigationContainer.navigae('ImageDraw')}> {/* 캐릭터 그리기*/}
-          <Text style={styles.buttonText}>캐릭터 그리기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPresds={() => NavigationContainer.navigae('Home')}> {/* 홈 화면으로 이동*/}
-          <Text style={styles.buttonText}>취소</Text>
-        </TouchableOpacity>
-      </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="IconDraw" component={IconDraw} />
+        <Stack.Screen name="ImageDraw" component={ImageDraw} />
+      </Stack.Navigator>
 
-      {/* 오른쪽 패널 */}
-      <View style={styles.rightPanel}>
-        <View style={styles.iconButton}>
-          <Image
-            source={require("./image/icon1.png")} // 이미지 파일 경로
-            style={styles.iconImage}
-          />
+      <View style={styles.container}>
+        {/* 왼쪽 중앙의 버튼들 */}
+        <View style={styles.buttonContainer}> 
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('IconDraw')}> {/* 아이콘 그리기*/}
+            <Text style={styles.buttonText}>아이콘 그리기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ImageDraw')}> {/* 캐릭터 그리기*/}
+            <Text style={styles.buttonText}>캐릭터 그리기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}> {/* 홈 화면으로 이동*/}
+            <Text style={styles.buttonText}>취소</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.iconButton}>
-          <Image
-            source={require("./image/icon2.png")} // 이미지 파일 경로
-            style={styles.iconImage}
-          />
-        </View>
-        <View style={styles.iconButton}>
-          <Image
-            source={require("./image/icon3.png")} // 이미지 파일 경로
-            style={styles.iconImage}
-          />
-        </View>
-        <View style={styles.iconButton}>
-          <Image
-            source={require("./image/icon4.png")} // 이미지 파일 경로
-            style={styles.iconImage}
-          />
-        </View>
-        <View style={styles.iconButton}>
-          <Image
-            source={require("./image/icon5.png")} // 이미지 파일 경로
-            style={styles.iconImage}
-          />
-        </View>
-        <View style={styles.iconButton}>
-          <Image
-            source={require("./image/icon6.png")} // 이미지 파일 경로
-            style={styles.iconImage}
-          />
-        </View>
-        <View style={styles.undoRedoContainer}>
-          <View style={styles.undoRedoButton}>
+
+        {/* 오른쪽 패널 */}
+        <View style={styles.rightPanel}>
+          <View style={styles.iconButton}>
             <Image
-              source={require("./image/undo.png")} // 되돌리기 이미지
-              style={styles.undoRedoImage}
+              source={require("./image/icon1.png")} // 이미지 파일 경로
+              style={styles.iconImage}
             />
           </View>
-          <View style={styles.undoRedoButton}>
+          <View style={styles.iconButton}>
             <Image
-              source={require("./image/redo.png")} // 다시하기 이미지
-              style={styles.undoRedoImage}
+              source={require("./image/icon2.png")} // 이미지 파일 경로
+              style={styles.iconImage}
             />
+          </View>
+          <View style={styles.iconButton}>
+            <Image
+              source={require("./image/icon3.png")} // 이미지 파일 경로
+              style={styles.iconImage}
+            />
+          </View>
+          <View style={styles.iconButton}>
+            <Image
+              source={require("./image/icon4.png")} // 이미지 파일 경로
+              style={styles.iconImage}
+            />
+          </View>
+          <View style={styles.iconButton}>
+            <Image
+              source={require("./image/icon5.png")} // 이미지 파일 경로
+              style={styles.iconImage}
+            />
+          </View>
+          <View style={styles.iconButton}>
+            <Image
+              source={require("./image/icon6.png")} // 이미지 파일 경로
+              style={styles.iconImage}
+            />
+          </View>
+          <View style={styles.undoRedoContainer}>
+            <View style={styles.undoRedoButton}>
+              <Image
+                source={require("./image/undo.png")} // 되돌리기 이미지
+                style={styles.undoRedoImage}
+              />
+            </View>
+            <View style={styles.undoRedoButton}>
+              <Image
+                source={require("./image/redo.png")} // 다시하기 이미지
+                style={styles.undoRedoImage}
+              />
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </NavigationContainer>
   );
 };
 

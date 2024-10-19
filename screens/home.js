@@ -1,7 +1,7 @@
 import React from "react";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import App from 'C:\Users\User\scanF\App.js'
+import MainApp from './scanF/App.js'; // 절대 경로 대신 상대 경로를 사용하여 import
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ const { width, height } = Dimensions.get("window"); // 화면의 너비와 높�
 const Stack = createStackNavigator();
 
 const App = () => {
+  const navigation = useNavigation(); // 네비게이션 훅 사용
+  
   return (
     <View style={styles.container}>
       {/* 오른쪽 패널 */}
@@ -49,7 +51,8 @@ const App = () => {
             style={styles.iconImage}
           />
         </View>
-        <View style={styles.iconButton} onPresds={() => NavigationContainer.navigae('App')}>
+        {/* App.js로 네비게이션 이동 */}
+        <View style={styles.iconButton} onPress={() => navigation.navigate('MainApp')}>
           <Image
             source={require("./image/icon6.png")} // 이미지 파일 경로
             style={styles.iconImage}
@@ -71,6 +74,17 @@ const App = () => {
         </View>
       </View>
     </View>
+  );
+};
+
+const MainAppNavigator = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="App">
+        <Stack.Screen name="App" component={App} />
+        <Stack.Screen name="MainApp" component={MainApp} /> {/* MainApp에 대한 스크린 추가 */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -122,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default MainAppNavigator;

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Exit from './screens/home.js';
 import {
@@ -7,28 +7,19 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
   Dimensions,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { PanResponder } from "react-native";
 
+// SVG 아이콘 가져오기
+import Icon1 from './RandImage/icon1.svg';
+import Icon2 from './RandImage/icon2.svg';
+import Icon3 from './RandImage/icon3.svg';
+import Icon4 from './RandImage/icon4.svg';
+
 const { width, height } = Dimensions.get("window");
 const Stack = createStackNavigator();
-
-// 이미지 목록 (RandImage 폴더에서 이미지를 가져옴)
-const images = [
-  require('./RandImage/icon1.svg'),
-  require('./RandImage/icon2.svg'),
-  require('./RandImage/icon3.svg'),
-  require('./RandImage/icon4.svg'),
-  require('./RandImage/icon5.svg'),
-  require('./RandImage/icon6.svg'),
-  require('./RandImage/icon7.svg'),
-  require('./RandImage/icon8.svg'),
-  require('./RandImage/icon9.svg'),
-  require('./RandImage/icon10.svg'),
-];
 
 const App = () => {
   const [paths, setPaths] = useState([]); // 그린 경로들
@@ -37,11 +28,13 @@ const App = () => {
   const [strokeColor, setStrokeColor] = useState('black'); // 선 색상
   const [strokeWidth, setStrokeWidth] = useState(4); // 선 굵기
   const [randomImage, setRandomImage] = useState(null); // 랜덤 이미지 상태
+  const navigation = useNavigation();
 
   useEffect(() => {
     // 컴포넌트가 렌더링될 때 무작위 이미지를 선택
-    const randomIndex = Math.floor(Math.random() * images.length);
-    setRandomImage(images[randomIndex]);
+    const randomIndex = Math.floor(Math.random() * 4); // 아이콘이 4개라서 0~3까지의 랜덤 값 생성
+    const icons = [Icon1, Icon2, Icon3, Icon4];
+    setRandomImage(icons[randomIndex]);
   }, []);
 
   // PanResponder 설정
@@ -104,16 +97,10 @@ const App = () => {
     // 페이지 이동 기능. 여기서 원하는 페이지로 이동 설정
   };
 
-  const goHome = () => {
-    // 홈으로 나가는 기능
-  };
-
   return (
     <View style={styles.container}>
-      {/* 무작위 이미지 영역 */}
-      {randomImage && (
-        <Image source={randomImage} style={styles.randomImage} />
-      )}
+      {/* 무작위 SVG 아이콘 */}
+      {randomImage && <randomImage width={width * 0.6} height={height * 0.4} />}
 
       {/* 그림판 영역 */}
       <View {...panResponder.panHandlers} style={styles.canvas}>
@@ -144,56 +131,35 @@ const App = () => {
       <View style={styles.rightPanel}>
         <View style={styles.iconButton}>
           <TouchableOpacity onPress={activatePen}>
-            <Image
-              source={require("./image/icon1.png")}
-              style={styles.iconImage}
-            />
+            <Icon1 width={40} height={40} />
           </TouchableOpacity>
         </View>
         <View style={styles.iconButton}>
           <TouchableOpacity onPress={activateFountainPen}>
-            <Image
-              source={require("./image/icon2.png")}
-              style={styles.iconImage}
-            />
+            <Icon2 width={40} height={40} />
           </TouchableOpacity>
         </View>
         <View style={styles.iconButton}>
           <TouchableOpacity onPress={activatePencil}>
-            <Image
-              source={require("./image/icon3.png")}
-              style={styles.iconImage}
-            />
+            <Icon3 width={40} height={40} />
           </TouchableOpacity>
         </View>
         <View style={styles.iconButton}>
           <TouchableOpacity onPress={activateHighlighter}>
-            <Image
-              source={require("./image/icon4.png")}
-              style={styles.iconImage}
-            />
+            <Icon4 width={40} height={40} />
           </TouchableOpacity>
         </View>
         <View style={styles.iconButton}>
           <TouchableOpacity onPress={goToOtherPage}>
-            <Image
-              source={require("./image/icon6.png")}
-              style={styles.iconImage}
-            />
+            <Icon1 width={40} height={40} />
           </TouchableOpacity>
         </View>
         <View style={styles.undoRedoContainer}>
           <TouchableOpacity onPress={undo}>
-            <Image
-              source={require("./image/undo.png")}
-              style={styles.undoRedoImage}
-            />
+            <Icon2 width={40} height={40} />
           </TouchableOpacity>
           <TouchableOpacity onPress={redo}>
-            <Image
-              source={require("./image/redo.png")}
-              style={styles.undoRedoImage}
-            />
+            <Icon3 width={40} height={40} />
           </TouchableOpacity>
         </View>
       </View>
@@ -215,13 +181,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#F5FCFF",
     padding: 10,
-  },
-  randomImage: {
-    position: "absolute",
-    top: height * 0.25,
-    width: width * 0.6,
-    height: height * 0.4,
-    resizeMode: "contain",
   },
   canvas: {
     width: '80%',
@@ -247,20 +206,11 @@ const styles = StyleSheet.create({
     height: width * 0.04,
     marginVertical: height * 0.005,
   },
-  iconImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "contain",
-  },
   undoRedoContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: height * 0.14,
     marginBottom: height * 0.005,
-  },
-  undoRedoImage: {
-    width: width * 0.04,
-    height: width * 0.04,
   },
   buttonContainer: {
     position: "absolute",

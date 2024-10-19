@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Exit from './screens/home.js';
 import {
@@ -37,6 +37,7 @@ const App = () => {
   const [strokeColor, setStrokeColor] = useState('black'); // 선 색상
   const [strokeWidth, setStrokeWidth] = useState(4); // 선 굵기
   const [randomImage, setRandomImage] = useState(null); // 랜덤 이미지 상태
+  const navigation = useNavigation(); // 네비게이션 객체 사용
 
   useEffect(() => {
     // 컴포넌트가 렌더링될 때 무작위 이미지를 선택
@@ -54,9 +55,11 @@ const App = () => {
         setCurrentPath(newPath);
       },
       onPanResponderRelease: () => {
-        setPaths([...paths, { path: currentPath, strokeColor, strokeWidth }]);
-        setCurrentPath('');
-        setRedoPaths([]);
+        if (currentPath) {
+          setPaths([...paths, { path: currentPath, strokeColor, strokeWidth }]);
+          setCurrentPath('');
+          setRedoPaths([]);
+        }
       },
     })
   ).current;
@@ -101,11 +104,7 @@ const App = () => {
   };
 
   const goToOtherPage = () => {
-    // 페이지 이동 기능. 여기서 원하는 페이지로 이동 설정
-  };
-
-  const goHome = () => {
-    // 홈으로 나가는 기능
+    navigation.navigate('OtherPage'); // 페이지 이동 시 navigation 사용
   };
 
   return (
@@ -183,7 +182,7 @@ const App = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.undoRedoContainer}>
-          <TouchableOpacity onPress={undo} >
+          <TouchableOpacity onPress={undo}>
             <Image
               source={require("./image/undo.png")}
               style={styles.undoRedoImage}
